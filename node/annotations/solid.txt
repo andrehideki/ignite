@@ -1,0 +1,2 @@
+Single Responsability principle
+    Uma classe dever ter somente uma razão para mudar

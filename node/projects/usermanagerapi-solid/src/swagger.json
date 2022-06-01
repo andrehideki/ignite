@@ -1,0 +1,182 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "User Manager Ignite Documentation",
+        "description": "This is an API of user management"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": ["users"],
+                "summary": "List all users",
+                "operationId": "listAllUsers" ,
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    { 
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "an authorization header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": { 
+                        "description": "Success: List all users" ,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": { "type": "string" },
+                                            "name": { "type": "string" },
+                                            "admin": { "type": "boolean" },
+                                            "email": { "type": "string" },
+                                            "created_at": { "type": "string" },
+                                            "updated_at": { "type": "string" }
+                                        }   
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "User not found or Not allowed" }
+                }
+            },
+            "post": {
+                "tags": ["users"],
+                "summary": "Create user",
+                "description": "Create a new user",
+                "operationId": "createUser" ,
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "requestBody": {
+                    "description": "Basic information for create user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "name": "string",
+                                        "email": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "first last",
+                                    "email": "first.last@mail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": { 
+                        "description": "Success: User created" ,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "name": { "type": "string" },
+                                        "admin": { "type": "boolean" },
+                                        "email": { "type": "string" },
+                                        "created_at": { "type": "string" },
+                                        "updated_at": { "type": "string" }
+                                    }  
+                                } 
+                            }
+                        }
+                    },
+                    "400": { "description": "Email is already taken" }
+                }
+            }
+        },
+        "/users/{user_id}/": {
+            "get": {
+                "tags": ["users"],
+                "summary": "Get user",
+                "description": "Get information about user",
+                "operationId": "getUser" ,
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "type": "string",
+                        "required": true,
+                        "description": "Id of user"
+                    }
+                ],
+                "responses": {
+                    "200": { 
+                        "description": "Success: User information" ,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "name": { "type": "string" },
+                                        "admin": { "type": "boolean" },
+                                        "email": { "type": "string" },
+                                        "created_at": { "type": "string" },
+                                        "updated_at": { "type": "string" }
+                                    }   
+                                }
+                            }
+                        }
+                    },
+                    "404": { "description": "User not found" }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": ["users"],
+                "summary": "Turn user admin",
+                "operationId": "turnUserAdmin" ,
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "type": "string",
+                        "required": true,
+                        "description": "Id of user candidater to turn admin"
+                    }
+                ],
+                "responses": {
+                    "200": { 
+                        "description": "Success: User turned admin" ,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "name": { "type": "string" },
+                                        "admin": { "type": "boolean" },
+                                        "email": { "type": "string" },
+                                        "created_at": { "type": "string" },
+                                        "updated_at": { "type": "string" }
+                                    }   
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "Not allowed" },
+                    "404": { "description": "User not found" }
+                }
+            }
+        }
+    }
+}

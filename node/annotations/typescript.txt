@@ -1,0 +1,3 @@
+Linguagem open source da microsoft
+Superset do javascript
+Tipagem estática

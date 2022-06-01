@@ -1,0 +1,17 @@
+Representation State Transfer
+Modelo de Arquitetura
+
+Regras
+    1. Client Server
+    2. Stateless
+    3. Cache
+    4. Interface uniforme
+        Identificação do recurso
+            http://localhost/products
+            http://localhost/clients
+        Representação dos recursos
+        Mensagem auto descritivas
+        HATEOAS (Hypertext as the engine of application state)
+    5. Camadas
+    6. Código sob demanda
+

@@ -1,0 +1,5 @@
+API:
+
+Application programming interface
+Especificações de possíveis interações entre aplicativos
+Documento para desenvolvedor

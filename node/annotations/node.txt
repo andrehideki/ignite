@@ -1,0 +1,25 @@
+Plataforma Open source que permite a execuação de JS no Servidor
+v8 + libuv + conjunto de módulos
+
+Criado pelo Ryan Dahl
+
+Características:
+    Arquitetura Event Loop
+        Call Stack
+    Single Thread: Event Loop
+    Default 4 threads
+    Non blocking IO
+    Possui módulos próprios
+
+Event Loop
+    Escuta uma requisição por vez
+    Manda para uma thread
+
+Gerenciadores de pacotes
+    NPM
+    YARN
+
+Frameworks
+    Express
+    Nest.JS
+    Egg.js
