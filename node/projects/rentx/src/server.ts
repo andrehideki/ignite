@@ -1,9 +1,11 @@
 import express from "express";
 import "./database";
+import "./shared/container";
 import { router } from "./routes";
 import swaggerUi from "swagger-ui-express";
 import swaagerFile from "./swagger.json";
 import { handleError } from "./routes/handleError";
+
 
 
 const app = express();
