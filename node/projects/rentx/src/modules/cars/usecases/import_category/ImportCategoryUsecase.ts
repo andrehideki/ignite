@@ -2,17 +2,21 @@ import fs from "fs";
 import { Express } from "express";
 import { parse } from "csv-parse";
 import { ICategoriesRespository } from "../../repositories/ICategoriesRepository";
+import { inject, injectable } from "tsyringe";
 
 interface IImportCategory {
     name: string;
     description: string;
 }
 
+@injectable()
 class ImportCategoryUsecase {
     
-    constructor(private categoryRepository: ICategoriesRespository) {}
+    constructor(
+        @inject("CategoriesRepository")
+        private categoryRepository: ICategoriesRespository) {}
 
-    private loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
+    private async loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
         return new Promise((resolve, reject) => {
             const stream = fs.createReadStream(file.path);
             const categories: IImportCategory[] = [];
@@ -32,17 +36,17 @@ class ImportCategoryUsecase {
 
     async execute(file: Express.Multer.File): Promise<void> {
         const categories = await this.loadCategories(file);
-        categories.map(({ name, description }) => {
-            const categoryAlreadyExists = !!this.categoryRepository.findByName(name);
+        for (const { name, description } of categories) {
+            const categoryAlreadyExists = !! await this.categoryRepository.findByName(name);
             if (categoryAlreadyExists) {
-                throw new Error("Category already exists ");
+                throw new Error(`Category already exists: ${name}`);
             }
             this.categoryRepository.create({
                 name,
                 description
             });
-        });
-    }
+        }
+    }   
 }
 
 export { ImportCategoryUsecase };
