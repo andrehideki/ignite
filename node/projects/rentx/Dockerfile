@@ -1,11 +1,10 @@
-FROM node:18
+FROM node:14-alpine
 
 WORKDIR /usr/app
 
 COPY package.json ./
 
-RUN npm install -g npm@8.11.0
-RUN npm install
+RUN npm install --silent
 
 COPY . .
 

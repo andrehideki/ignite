@@ -1,15 +1,21 @@
-import { createConnection, getConnectionOptions } from "typeorm";
+import {  DataSource } from "typeorm";
 
 
-interface IOptions {
-    host: string
-}
-
-getConnectionOptions().then(options => {
-    const newOptions = options as IOptions;
-    newOptions.host = "database";
-    createConnection({
-        ...options
-    });
+export const AppDataSource = new DataSource({
+    type: "postgres",
+    host: "database",
+    port: 5432,
+    username: "docker",
+    password: "ignite",
+    database: "rentx",
+    migrations: ["./src/database/migrations/*.ts"],
+    entities: ["src/modules/**/entities/*{.js,.ts}"],
 });
-createConnection();
+
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!");
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err);
+    });
