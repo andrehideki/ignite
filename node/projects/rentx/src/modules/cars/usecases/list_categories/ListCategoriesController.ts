@@ -4,7 +4,7 @@ import { ListCategoriesUsecase } from "./ListCategoriesUsecase";
 
 class ListCategoriesController {
 
-    async handle(request: Request, response: Response) {
+    async handle(request: Request, response: Response): Promise<Response> {
         const listCategoriesUsecase = container.resolve(ListCategoriesUsecase);
         const categories = await listCategoriesUsecase.execute();
         return response.json(categories);

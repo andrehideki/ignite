@@ -4,10 +4,10 @@ import { CreateSpecificationUsecase } from "./CreateSpecificationUsecase";
 
 class CreateSpecificationController {
 
-    handle(request: Request, response: Response): Response {
+    async handle(request: Request, response: Response): Promise<Response> {
         const { name, description } = request.body;
         const createSpecificationUsecase = container.resolve(CreateSpecificationUsecase);
-        createSpecificationUsecase.execute({ name, description });
+        await createSpecificationUsecase.execute({ name, description });
         return response.status(201).send();
     }
 }
