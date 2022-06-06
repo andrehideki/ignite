@@ -6,7 +6,6 @@ import { ICategoriesRespository, ICreateCategoryDTO } from "../ICategoriesReposi
 
 
 class CategoriesRepository implements ICategoriesRespository {
-    private static INSTANCE: CategoriesRepository;
     private repository: Repository<Category>;
 
     constructor() {
