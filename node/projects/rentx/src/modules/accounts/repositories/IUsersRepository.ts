@@ -3,9 +3,9 @@ import { User } from "../entities/User";
 
 
 
-interface IUsersRespository {
+interface IUsersRepository {
     create(data: ICreateUserDTO): Promise<User>;
     list(): Promise<User[]>;
 }
 
-export { IUsersRespository };
+export { IUsersRepository };
