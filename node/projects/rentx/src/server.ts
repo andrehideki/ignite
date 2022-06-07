@@ -16,4 +16,4 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaagerFile));
 app.use(router);
 app.use(handleError);
 
-app.listen(3333, () => console.log("Server is running!"));
+app.listen(process.env.PORT, () => console.log(`Server is running! at: ${process.env.PORT}`));
