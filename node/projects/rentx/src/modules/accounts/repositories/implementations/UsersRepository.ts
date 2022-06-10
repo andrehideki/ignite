@@ -11,6 +11,7 @@ class UsersRepository implements IUsersRepository {
     constructor() {
         this.repository = AppDataSource.getRepository(User);
     }
+    
 
     async create({
         name,
@@ -37,6 +38,13 @@ class UsersRepository implements IUsersRepository {
 
     list(): Promise<User[]> {
         throw new Error("Method not implemented.");
+    }
+
+    async findById(id: string): Promise<User> {
+        const user = await this.repository.findOneBy({
+            id
+        });
+        return user;
     }
 
 }

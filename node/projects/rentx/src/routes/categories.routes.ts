@@ -1,5 +1,4 @@
 import { Router } from "express";
-import asyncHandler from "express-async-handler";
 
 import multer from "multer";
 import { CreateCategoryController } from "../modules/cars/usecases/create_category/CreateCategoryController";
@@ -15,17 +14,17 @@ const upload = multer({
     dest: "./tmp"
 });
 
-categoriesRoutes.get("/", asyncHandler(async(req, res) => 
-    await listCategoriesController.handle(req, res)
-));
+categoriesRoutes.get("/", (req, res) => 
+    listCategoriesController.handle(req, res)
+);
 
 
-categoriesRoutes.post("/", asyncHandler(async (req, res) => 
-    await createCategoryController.handle(req, res)
-));
+categoriesRoutes.post("/", (req, res) => 
+    createCategoryController.handle(req, res)
+);
 
-categoriesRoutes.post("/import", upload.single("file"), asyncHandler(async (req, res) => 
-    await importCategoryController.handle(req, res)
-));
+categoriesRoutes.post("/import", upload.single("file"), (req, res) => 
+    importCategoryController.handle(req, res)
+);
 
 export { categoriesRoutes };

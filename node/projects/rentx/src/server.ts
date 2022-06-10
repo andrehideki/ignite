@@ -1,11 +1,12 @@
 import express from "express";
+import "express-async-errors";
 import "./database";
 import "./shared/container";
 import { router } from "./routes";
 import swaggerUi from "swagger-ui-express";
 import swaagerFile from "./swagger.json";
 import { handleError } from "./routes/handleError";
-
+import "dotenv/config";
 
 
 const app = express();

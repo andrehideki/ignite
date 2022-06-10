@@ -3,6 +3,7 @@ import { Express } from "express";
 import { parse } from "csv-parse";
 import { ICategoriesRespository } from "../../repositories/ICategoriesRepository";
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 
 interface IImportCategory {
     name: string;
@@ -39,7 +40,7 @@ class ImportCategoryUsecase {
         for (const { name, description } of categories) {
             const categoryAlreadyExists = !! await this.categoryRepository.findByName(name);
             if (categoryAlreadyExists) {
-                throw new Error(`Category already exists: ${name}`);
+                throw new AppError(`Category already exists: ${name}`);
             }
             this.categoryRepository.create({
                 name,
