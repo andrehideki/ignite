@@ -4,6 +4,7 @@ import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { CreateUserUseCase } from "../CreateUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 import "dotenv/config";
+import { AppError } from "../../../../errors/AppError";
 
 let usersRepository: IUsersRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
@@ -28,5 +29,14 @@ describe("AuthenticateUserUseCase", () => {
             password: user.password
         });
         expect(result).toHaveProperty("token");
+    });
+
+    it("Should not be able to authenticate a non existing user", async () => {
+        await expect(async () => {
+            await authenticateUserUseCase.execute({
+                email: "false@mail.com",
+                password: "1234"
+            });    
+        }).rejects.toBeInstanceOf(AppError);
     });
 });
