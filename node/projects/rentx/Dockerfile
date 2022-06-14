@@ -8,6 +8,6 @@ RUN npm install --silent
 
 COPY . .
 
-EXPOSE 3333
+EXPOSE 4000
 
 CMD ["npm", "run", "dev"]
