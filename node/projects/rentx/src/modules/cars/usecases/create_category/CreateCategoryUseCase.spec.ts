@@ -23,4 +23,23 @@ describe("Create Category UseCase", () => {
         const categoryCreated = await categoriesRepository.findByName(category.name);
         expect(categoryCreated).toHaveProperty("id");
     });
+
+    it("Should not be able to create a new category with existing name", async () => {
+        const category = {
+            name: "Category name",
+            description: "Category description"
+        };
+        await createCategoryUseCase.execute({
+            name: category.name,
+            description: category.description
+        });
+        try {
+            await createCategoryUseCase.execute({
+                name: category.name,
+                description: category.description
+            });
+        } catch(error) {
+            expect(error.message).toBe("Category already exists");
+        }
+    });
 });
