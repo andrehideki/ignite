@@ -39,4 +39,21 @@ describe("AuthenticateUserUseCase", () => {
             });    
         }).rejects.toBeInstanceOf(AppError);
     });
+
+    it("Should be able to authenticate a user", async () => {
+        expect(async () => {
+            const user: ICreateUserDTO = {
+                driver_license: "000123",
+                email: "user@test.com",
+                password: "1234",
+                name: "user"
+            };
+            await createUserUseCase.execute(user);
+            const result = await authenticateUserUseCase.execute({
+                email: user.email,
+                password: "incorect password"
+            });
+            expect(result).toHaveProperty("token");
+        }).rejects.toBeInstanceOf(AppError);
+    });
 });
