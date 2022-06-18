@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     password: "ignite",
     database: "rentx",
     migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
-    entities: ["src/modules/**/infra/typeorm/entities/*{.js,.ts}"]
+    entities: ["./src/shared/infra/typeorm/entities/*{.js,.ts}"]
 });
 
 AppDataSource.initialize()
