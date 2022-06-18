@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "run:dev": "npx ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --poll --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "typeorm": "npx ts-node-dev -r typeorm-ts-node-esm",
+    "typeorm": "npx typeorm-ts-node-esm",
     "typeorm:migrate": "typeorm-ts-node-esm migration:run -d src/shared/infra/typeorm/index.ts",
     "dev": "concurrently  \"yarn typeorm:migrate\" \"yarn run:dev\" ",
     "test": "jest"
