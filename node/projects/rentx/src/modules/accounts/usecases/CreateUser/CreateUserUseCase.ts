@@ -3,7 +3,7 @@ import { hashSync } from "bcryptjs";
 
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
-import { User } from "@modules/accounts/infra/typeorm/entities/User";
+import { User } from "@shared/infra/typeorm/entities/User";
 import { AppError } from "@shared/errors/AppError";
 @injectable()
 class CreateUserUseCase {
