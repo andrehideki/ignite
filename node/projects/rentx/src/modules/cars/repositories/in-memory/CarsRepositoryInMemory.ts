@@ -3,6 +3,7 @@ import { Car } from "@shared/infra/typeorm/entities/Car";
 import { ICarsRepository } from "../ICarsRepository";
 
 class CarsRepositoryInMemory implements ICarsRepository {
+   
     
     cars: Car[] = [];
 
@@ -21,6 +22,18 @@ class CarsRepositoryInMemory implements ICarsRepository {
 
     async findById(id: string): Promise<Car> {
         return this.cars.find(car => car.id == id);
+    }
+
+    async findAvailable(
+        brand?: string, 
+        category_id?: string,
+        name?:string): Promise<Car[]> {
+        return this.cars.filter(car => 
+                car.available &&
+                (!category_id || category_id == car.category_id) &&
+                (!brand || brand == car.brand) &&
+                (!name || name == car.name)
+        );
     }
 }
 

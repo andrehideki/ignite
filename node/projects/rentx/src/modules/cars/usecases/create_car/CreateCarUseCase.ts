@@ -19,7 +19,6 @@ class CreateCarUseCase {
     constructor(@inject("CarsRepository") private carsRepository: ICarsRepository) {}
 
     async execute({ name, description, daily_rate, license_plate, fine_amount, brand, category_id }: IRequest): Promise<Car> {
-        console.log(name, description, daily_rate, license_plate, fine_amount, brand, category_id);
         const carAlreadyExists = !!await this.carsRepository.findByLicensePlate(license_plate);
         if (carAlreadyExists) {
             throw new AppError("Car already existis");

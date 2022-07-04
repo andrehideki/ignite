@@ -11,6 +11,7 @@ async function create() {
         id,
         name: "admin",
         driver_license: "admin",
+        isAdmin: true,
         password,
         email: "admin@rentx.com.br",
         created_at: new Date()
