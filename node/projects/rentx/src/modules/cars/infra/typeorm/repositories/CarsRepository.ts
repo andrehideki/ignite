@@ -3,7 +3,6 @@ import { IUpdateCarDTO } from "@modules/cars/dto/IUpdateCarDTO";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { AppDataSource } from "@shared/infra/typeorm";
 import { Car } from "@shared/infra/typeorm/entities/Car";
-import { Specification } from "@shared/infra/typeorm/entities/Specification";
 
 import { Repository } from "typeorm";
 
