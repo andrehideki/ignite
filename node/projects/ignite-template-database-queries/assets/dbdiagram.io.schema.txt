@@ -1,0 +1,52 @@
+Table users as u {
+  id uuid [pk] 
+  first_name varchar
+  last_name varchar
+  email varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table games as g {
+  id uuid [pk] 
+  title varchar
+  created_at timestamp
+  updated_at timestamp
+}
+ 
+Table users_games as ug {
+  users_id uuid [pk] 
+  games_id uuid [pk] 
+}
+
+Table games_genres as gg {
+  genres_id uuid [pk] 
+  games_id uuid [pk] 
+}
+ 
+Table genres as ge {
+  id uuid [pk] 
+  name varcahr
+  created_at timestamp
+}
+
+Table orders as o {
+  id uuid [pk] 
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table game_orders as go {
+  orders_id uuid [pk] 
+  games_id uuid [pk] 
+}
+
+Ref: u.id > ug.users_id
+Ref: g.id > ug.games_id
+Ref: g.id > gg.games_id
+Ref: ge.id > gg.genres_id
+Ref: g.id > go.games_id
+Ref: o.id > go.orders_id
+
+
+

@@ -1,23 +1,25 @@
-import { ICreateSpecificationDTO, ISpecificationRespository } from "@modules/cars/repositories/ISpecificationRepository";
+import { ICreateSpecificationDTO, ISpecificationsRespository } from "@modules/cars/repositories/ISpecificationRepository";
 import { AppDataSource } from "@shared/infra/typeorm";
 import { Repository } from "typeorm";
 import { Specification } from "../../../../../shared/infra/typeorm/entities/Specification";
 
 
-class SpecificationRepository implements ISpecificationRespository {
+class SpecificationsRepository implements ISpecificationsRespository {
 
     private repository: Repository<Specification>;
 
     constructor() {
         this.repository = AppDataSource.getRepository(Specification);
     }
+   
 
-    async create({ name, description }: ICreateSpecificationDTO): Promise<void> {
+    async create({ name, description }: ICreateSpecificationDTO): Promise<Specification> {
         const specification = this.repository.create({
             name,
             description
         });
         await this.repository.save(specification);
+        return specification;
     }
 
     async list(): Promise<Specification[]> {
@@ -29,6 +31,15 @@ class SpecificationRepository implements ISpecificationRespository {
             name
         });
     }
+
+    async findByIds(ids: string[]): Promise<Specification[]> {
+        const specifications = [];
+        for (const id of ids) {
+            const specification = await this.repository.findOneBy({ id });[];
+            if (specification) specifications.push(specification);
+        }
+        return specifications;
+    }
 }
 
-export { SpecificationRepository };
+export { SpecificationsRepository };

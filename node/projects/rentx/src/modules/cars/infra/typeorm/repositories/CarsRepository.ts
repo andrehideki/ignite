@@ -1,7 +1,9 @@
 import { ICreateCarDTO } from "@modules/cars/dto/ICreateCarDTO";
+import { IUpdateCarDTO } from "@modules/cars/dto/IUpdateCarDTO";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { AppDataSource } from "@shared/infra/typeorm";
 import { Car } from "@shared/infra/typeorm/entities/Car";
+import { Specification } from "@shared/infra/typeorm/entities/Specification";
 
 import { Repository } from "typeorm";
 
@@ -12,6 +14,7 @@ class CarsRepository implements ICarsRepository {
     constructor() {
         this.repository = AppDataSource.getRepository(Car);
     }
+  
    
 
     async create({ name, description, daily_rate, license_plate, fine_amount, brand, category_id, available }: ICreateCarDTO): Promise<Car> {
@@ -22,10 +25,22 @@ class CarsRepository implements ICarsRepository {
         return car;
     }
 
+    async update({ id, name, description, daily_rate, license_plate, fine_amount, brand, category_id, available, specifications }: IUpdateCarDTO): Promise<Car> {
+        const car = await this.repository.findOneBy({
+            id
+        });
+        Object.assign(car, {
+            name, description, daily_rate, license_plate, fine_amount, brand, category_id, available, specifications
+        });
+        this.repository.save(car);
+        return car;
+    }
+
     async findByLicensePlate(license_plate: string): Promise<Car> {
-        return await this.repository.findOneBy({
+        const cars = await this.repository.findOneBy({
             license_plate
         });
+        return cars;
     }
     
     async findById(id: string): Promise<Car> {
@@ -41,11 +56,16 @@ class CarsRepository implements ICarsRepository {
     ): Promise<Car[]> {
         const carsQuery = this.repository
             .createQueryBuilder("c")
+            .leftJoinAndSelect("c.specifications", "specification")
             .where("available = :available", { available: true });
         if (brand) carsQuery.where("c.brand = :brand", { brand });
         if (category_id) carsQuery.where("c.category_id = :category_id", { category_id });
         if (name) carsQuery.where("c.name = :name", { name });
-        return await carsQuery.getMany();
+        const cars = await carsQuery.getMany();
+        for (const car of cars) {
+            console.log(await car.specifications);
+        }
+        return cars;
     }
     
 }

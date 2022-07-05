@@ -13,7 +13,7 @@ interface IRequest {
 class CreateSpecificationUsecase {
     
         constructor(
-        @inject("SpecificationRepository")
+        @inject("SpecificationsRepository")
         private specificationRepository: ISpecificationRespository
     ) {}
 
