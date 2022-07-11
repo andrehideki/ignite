@@ -1,8 +1,8 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
-import { ListAvailableCarsUsecase } from "./ListAvailableCarsUsecase";
 import { v4 as uuidV4 } from "uuid";
-describe("List cars", () => {
+import { ListAvailableCarsUsecase } from "./ListAvailableCarsUsecase";
+describe("List Available Cars", () => {
     
 
     function generateCar(available) {

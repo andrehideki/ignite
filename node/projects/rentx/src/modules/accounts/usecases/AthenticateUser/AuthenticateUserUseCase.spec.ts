@@ -1,16 +1,16 @@
-import { AppError } from "@shared/errors/AppError";
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersRepositoryInMemory";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 import "dotenv/config";
 
-import { CreateUserUseCase } from "@modules/accounts/usecases/CreateUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "@modules/accounts/usecases/AthenticateUser/AuthenticateUserUseCase";
+import { CreateUserUseCase } from "@modules/accounts/usecases/CreateUser/CreateUserUseCase";
 
 let usersRepository: IUsersRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let createUserUseCase: CreateUserUseCase;
-describe("AuthenticateUserUseCase", () => {
+describe("Authenticate User", () => {
 
     beforeEach(() => {
         usersRepository = new UsersRepositoryInMemory();

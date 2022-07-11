@@ -4,6 +4,8 @@ import { Car } from "@shared/infra/typeorm/entities/Car";
 import { ICarsRepository } from "../ICarsRepository";
 
 class CarsRepositoryInMemory implements ICarsRepository {
+    
+    
   
     
     cars: Car[] = [];
@@ -45,6 +47,11 @@ class CarsRepositoryInMemory implements ICarsRepository {
                 (!name || name == car.name)
         );
     }
+
+    async findAvailableById(id: string): Promise<Car> {
+        return this.cars.find(car => car.id == id && car.available);
+    }
 }
 
 export { CarsRepositoryInMemory };
+

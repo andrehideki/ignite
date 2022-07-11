@@ -1,12 +1,12 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
-import { Car } from "@shared/infra/typeorm/entities/Car";
-import { CreateCarSpecificationUseCase } from "./CreateCarSpecificationUseCase";
-import { v4 as uuidV4 } from "uuid";
-import { AppError } from "@shared/errors/AppError";
-import { ISpecificationsRespository } from "@modules/cars/repositories/ISpecificationRepository";
 import { SpecificationsRepositoryInMemory } from "@modules/cars/repositories/in-memory/SpecificationsRepositoryInMemory";
+import { ISpecificationsRespository } from "@modules/cars/repositories/ISpecificationRepository";
+import { AppError } from "@shared/errors/AppError";
+import { Car } from "@shared/infra/typeorm/entities/Car";
 import { Specification } from "@shared/infra/typeorm/entities/Specification";
+import { v4 as uuidV4 } from "uuid";
+import { CreateCarSpecificationUseCase } from "./CreateCarSpecificationUseCase";
 
 let createCarSpecificationUseCase: CreateCarSpecificationUseCase;
 let carsRepository: ICarsRepository;
@@ -28,7 +28,7 @@ function generateCar(available) {
     };
 }
 
-describe("Create car specification", () => {
+describe("Create Car Specification", () => {
     
     
     beforeEach(async () => { 
