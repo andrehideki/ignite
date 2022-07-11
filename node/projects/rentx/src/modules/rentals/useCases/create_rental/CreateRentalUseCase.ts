@@ -1,8 +1,8 @@
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
+import { IDateProvider } from "@shared/container/providers/date_provider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { inject } from "tsyringe";
 
 dayjs.extend(utc);
 
@@ -17,8 +17,8 @@ class CreateRentalUseCase {
     MINIMUM_RENTAL_PERIOD_IN_HOURS = 24;
 
     constructor(
-        @inject("")
-        private rentalsRepository: IRentalsRepository
+        private rentalsRepository: IRentalsRepository,
+        private dateProvider: IDateProvider
     ){}
 
     async execute({ car_id, user_id, expected_return_date}: IRequest) {
@@ -30,19 +30,11 @@ class CreateRentalUseCase {
         if (rentalOpenToUser) {
             throw new AppError("There's a rental in progress for user!");
         }
-        const expectedReturnDateFormat = dayjs(expected_return_date)
-            .utc()
-            .local()
-            .format();
-        const today = dayjs()
-            .utc()
-            .local()
-            .format();
-        const difference = dayjs(expectedReturnDateFormat).diff(today, "hours");
+        const today = await this.dateProvider.dateNow();
+        const difference = await this.dateProvider.compareInHours(today, expected_return_date);
         if (difference < this.MINIMUM_RENTAL_PERIOD_IN_HOURS) {
             throw new AppError("Invalid return date");
         }
-        // O aluguel de ter duração minima de 24 horas.
         const rental = await this.rentalsRepository.create({
             car_id,
             user_id,

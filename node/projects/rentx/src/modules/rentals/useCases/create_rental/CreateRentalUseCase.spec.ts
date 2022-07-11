@@ -1,4 +1,5 @@
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
+import { DayjsDateProvider } from "@shared/container/providers/date_provider/implementations/DayjsDateProvider";
 import { AppError } from "@shared/errors/AppError";
 import dayjs from "dayjs";
 import "reflect-metadata";
@@ -12,7 +13,7 @@ describe("Create Rental", () => {
     
     beforeEach(() => {
         rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
-        createRentalUseCase = new CreateRentalUseCase(rentalsRepositoryInMemory);
+        createRentalUseCase = new CreateRentalUseCase(rentalsRepositoryInMemory, new DayjsDateProvider());
     });
 
     it("should be able to create a new rental", async () => {
