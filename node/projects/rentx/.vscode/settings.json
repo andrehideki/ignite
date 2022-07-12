@@ -4,6 +4,9 @@
   },
   "cSpell.words": [
     "aluguel",
-    "duração"
+    "duração",
+    "middlewares",
+    "tsyringe",
+    "typeorm"
   ]
 }

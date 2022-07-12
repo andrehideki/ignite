@@ -7,7 +7,6 @@ interface ICarsRepository {
     update(dto: IUpdateCarDTO): Promise<Car>;
     findByLicensePlate(license_plate: string): Promise<Car>;
     findById(id: string): Promise<Car>;
-    findAvailableById(id: string): Promise<Car>;
     findAvailable(
         brand?: string, 
         category_id?: string,
@@ -16,3 +15,4 @@ interface ICarsRepository {
 }
 
 export { ICarsRepository };
+

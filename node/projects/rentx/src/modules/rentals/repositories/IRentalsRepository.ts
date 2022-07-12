@@ -8,8 +8,8 @@ interface ICreateData {
 
 interface IRentalsRepository {
     create(dto: ICreateData): Promise<Rental>;
-    findOpenRentalByCar(car_id: String): Promise<Rental>;
-    findOpenRentalByUser(user_id: String): Promise<Rental>;
+    findOpenRentalByCar(car_id: string): Promise<Rental>;
+    findOpenRentalByUser(user_id: string): Promise<Rental>;
 }
 
 export { IRentalsRepository, ICreateData };

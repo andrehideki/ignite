@@ -3,6 +3,7 @@ import { IDateProvider } from "@shared/container/providers/date_provider/IDatePr
 import { AppError } from "@shared/errors/AppError";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { inject, injectable } from "tsyringe";
 
 dayjs.extend(utc);
 
@@ -12,16 +13,19 @@ interface IRequest {
     expected_return_date: Date;
 }
 
+@injectable()
 class CreateRentalUseCase {
 
     MINIMUM_RENTAL_PERIOD_IN_HOURS = 24;
 
     constructor(
+        @inject("RentalsRepository")
         private rentalsRepository: IRentalsRepository,
+        @inject("DateProvider")
         private dateProvider: IDateProvider
     ){}
 
-    async execute({ car_id, user_id, expected_return_date}: IRequest) {
+    async execute({ car_id, user_id, expected_return_date }: IRequest) {
         const carUnavailable = await this.rentalsRepository.findOpenRentalByCar(car_id);
         if (carUnavailable) {
             throw new AppError("Car is unavailable");
