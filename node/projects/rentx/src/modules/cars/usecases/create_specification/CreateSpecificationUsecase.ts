@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
+import { ISpecificationsRespository } from "@modules/cars/repositories/ISpecificationRepository";
 import { AppError } from "@shared/errors/AppError";
-import { ISpecificationRespository } from "@modules/cars/repositories/ISpecificationRepository";
 
 
 interface IRequest {
@@ -14,7 +14,7 @@ class CreateSpecificationUsecase {
     
         constructor(
         @inject("SpecificationsRepository")
-        private specificationRepository: ISpecificationRespository
+        private specificationRepository: ISpecificationsRespository
     ) {}
 
     async execute({ name, description }: IRequest): Promise<void>{
