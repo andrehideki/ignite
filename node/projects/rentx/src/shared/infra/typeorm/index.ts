@@ -1,16 +1,20 @@
-import {  DataSource } from "typeorm";
+import { DataSource, DataSourceOptions } from "typeorm";
+
+const datasourceProperties: DataSourceOptions = {
+    type: "postgres",
+    host: process.env.DATABASE_URL || "localhost",
+    port: 5432,
+    username: "docker",
+    password: "ignite",
+    database: process.env.NODE_ENV == "test"
+        ? "rentx_test" 
+        : "rentx" ,
+    migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
+    entities: ["./src/shared/infra/typeorm/entities/*{.js,.ts}"]
+};
 
 async function createDataSource() {
-    const appDataSource = new DataSource({
-        type: "postgres",
-        host: process.env.DATABASE_URL || "localhost",
-        port: 5432,
-        username: "docker",
-        password: "ignite",
-        database: "rentx",
-        migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
-        entities: ["./src/shared/infra/typeorm/entities/*{.js,.ts}"]
-    });
+    const appDataSource = new DataSource(datasourceProperties);
     try {
         await appDataSource.initialize();
         console.log("Data Source has been initialized!");
@@ -20,16 +24,7 @@ async function createDataSource() {
     }
 }
 
-export const AppDataSource = new DataSource({
-    type: "postgres",
-    host: process.env.DATABASE_URL || "localhost",
-    port: 5432,
-    username: "docker",
-    password: "ignite",
-    database: "rentx",
-    migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
-    entities: ["./src/shared/infra/typeorm/entities/*{.js,.ts}"]
-});
+export const AppDataSource = new DataSource(datasourceProperties);
 
 AppDataSource.initialize()
     .then(() => {
@@ -41,3 +36,4 @@ AppDataSource.initialize()
 
 // const AppDataSource = await createDataSource();
 export { createDataSource };
+
