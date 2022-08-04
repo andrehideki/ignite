@@ -15,6 +15,9 @@ const datasourceProperties: DataSourceOptions = {
 
 async function createDataSource() {
     const appDataSource = new DataSource(datasourceProperties);
+    if (appDataSource.isInitialized) {
+        return appDataSource;
+    }
     try {
         await appDataSource.initialize();
         console.log("Data Source has been initialized!");
@@ -33,6 +36,8 @@ AppDataSource.initialize()
     .catch((err) => {
         console.error("Error during Data Source initialization", err);
     });
+
+
 
 // const AppDataSource = await createDataSource();
 export { createDataSource };
