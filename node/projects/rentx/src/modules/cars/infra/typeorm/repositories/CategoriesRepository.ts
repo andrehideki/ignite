@@ -1,15 +1,16 @@
-import { Repository } from "typeorm";
-import { AppDataSource } from "../../../../../shared/infra/typeorm";
+import { injectable, singleton } from "tsyringe";
+import { DataSource, Repository } from "typeorm";
 import { Category } from "../../../../../shared/infra/typeorm/entities/Category";
 import { ICategoriesRespository, ICreateCategoryDTO } from "../../../repositories/ICategoriesRepository";
 
 
-
+@injectable()
+@singleton()
 class CategoriesRepository implements ICategoriesRespository {
     private repository: Repository<Category>;
 
-    constructor() {
-        this.repository = AppDataSource.getRepository(Category);
+    constructor(appDataSource: DataSource) {
+        this.repository = appDataSource.getRepository(Category);
     }
 
     async create({ name, description }: ICreateCategoryDTO): Promise<void> {

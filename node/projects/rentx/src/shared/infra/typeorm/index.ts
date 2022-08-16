@@ -3,7 +3,9 @@ import { DataSource, DataSourceOptions } from "typeorm";
 const datasourceProperties: DataSourceOptions = {
     type: "postgres",
     host: process.env.DATABASE_URL || "localhost",
-    port: 5432,
+    port: process.env.NODE_ENV == "test"
+        ? 5433
+        : 5432,
     username: "docker",
     password: "ignite",
     database: process.env.NODE_ENV == "test"
@@ -13,12 +15,10 @@ const datasourceProperties: DataSourceOptions = {
     entities: ["./src/shared/infra/typeorm/entities/*{.js,.ts}"]
 };
 
-async function createDataSource() {
+export async function createDataSource(): Promise<DataSource> {
     const appDataSource = new DataSource(datasourceProperties);
-    if (appDataSource.isInitialized) {
-        return appDataSource;
-    }
     try {
+        //await appDataSource.runMigrations();
         await appDataSource.initialize();
         console.log("Data Source has been initialized!");
         return appDataSource;
@@ -27,18 +27,27 @@ async function createDataSource() {
     }
 }
 
-export const AppDataSource = new DataSource(datasourceProperties);
+export async function runMigrations() {
+    const datasource = await createDataSource();
+    try {
+        console.log("Running migrations")
+        await datasource.runMigrations();
+        console.log("Migrations finished")
+    } catch (e) {
+        console.error(e)
+    }
+}
 
-AppDataSource.initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!");
-    })
-    .catch((err) => {
-        console.error("Error during Data Source initialization", err);
-    });
+export async function dropDatabase() {
+    const datasource = await createDataSource();
+    try {
+        console.log("Deleting database")
+        await datasource.dropDatabase();
+        console.log("Database deleted")
+    } catch (e) {
+        console.error(e)
+    }
+}
 
 
-
-// const AppDataSource = await createDataSource();
-export { createDataSource };
-
+export const appDataSource = new DataSource(datasourceProperties);

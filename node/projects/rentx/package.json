@@ -9,7 +9,7 @@
     "typeorm:migrate": "typeorm-ts-node-esm migration:run -d src/shared/infra/typeorm/index.ts",
     "typeorm:revert": "typeorm-ts-node-esm migration:revert -d src/shared/infra/typeorm/index.ts",
     "dev": "concurrently  \"yarn typeorm:migrate\" \"yarn run:dev\" ",
-    "t": "NODE_ENV=test concurrently  \"yarn typeorm:migrate\" \"yarn test\" ",
+    "t": "NODE_ENV=test concurrently \"yarn test\" ",
     "test": "NODE_ENV=test jest --detectOpenHandles",
     "seed:admin": "ts-node-dev  -r tsconfig-paths/register src/shared/infra/typeorm/seed/admin.ts"
   },

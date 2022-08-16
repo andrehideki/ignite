@@ -1,14 +1,13 @@
 import { ICreateData, IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
-import { AppDataSource } from "@shared/infra/typeorm";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { Rental } from "../entities/Rental";
 
 class RentalsRepository implements IRentalsRepository {
     
     private repository: Repository<Rental>;
 
-    constructor() {
-        this.repository = AppDataSource.getRepository(Rental);
+    constructor(appDataSource: DataSource) {
+        this.repository = appDataSource.getRepository(Rental);
     }
 
     async create({ car_id, expected_return_date, user_id }: ICreateData): Promise<Rental> {

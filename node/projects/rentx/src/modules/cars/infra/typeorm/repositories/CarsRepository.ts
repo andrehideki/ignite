@@ -1,17 +1,16 @@
 import { ICreateCarDTO } from "@modules/cars/dto/ICreateCarDTO";
 import { IUpdateCarDTO } from "@modules/cars/dto/IUpdateCarDTO";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
-import { AppDataSource } from "@shared/infra/typeorm";
 import { Car } from "@shared/infra/typeorm/entities/Car";
 
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 
 class CarsRepository implements ICarsRepository {
     
     private repository: Repository<Car>;
 
-    constructor() {
-        this.repository = AppDataSource.getRepository(Car);
+    constructor(appDataSource: DataSource) {
+        this.repository = appDataSource.getRepository(Car);
     }
 
     async create({ name, description, daily_rate, license_plate, fine_amount, brand, category_id, available }: ICreateCarDTO): Promise<Car> {

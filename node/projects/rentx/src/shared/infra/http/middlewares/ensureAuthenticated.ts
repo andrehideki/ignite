@@ -2,6 +2,7 @@ import { AppError } from "@shared/errors/AppError";
 import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+import { createDataSource } from "@shared/infra/typeorm";
 
 interface IPayload {
     sub: string;
@@ -13,7 +14,8 @@ export async function ensureAuthenticated(request: Request, response: Response, 
     try {
         const [, token] = authHeader.split(" ");
         const { sub: userId } = verify(token, process.env.SECRET) as IPayload;
-        const usersRepository = new UsersRepository();
+        const datasource = await createDataSource();
+        const usersRepository = new UsersRepository(datasource);
         const user = await usersRepository.findById(userId);
         if (!user) throw new AppError("Users does not exists", 401);
         request.user = {

@@ -38,8 +38,10 @@ services:
       - /usr/src/app/node_modules
     links: 
       - database
+      - database_test
     depends_on:
       - database
+      - database_test
   
 volumes:
   pgdata:

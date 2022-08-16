@@ -1,6 +1,6 @@
 import { app } from "@shared/infra/http/app";
 import "@shared/infra/typeorm";
-import { createDataSource } from "@shared/infra/typeorm";
+import { createDataSource, dropDatabase, runMigrations } from "@shared/infra/typeorm";
 import { Category } from "@shared/infra/typeorm/entities/Category";
 import "dotenv/config";
 import request from "supertest";
@@ -10,12 +10,15 @@ import request from "supertest";
 describe("Create Category Controller", () => {
 
     beforeEach(async () => {
-        const datasource = await createDataSource();    
-        await datasource.getRepository(Category).query("DELETE FROM categories")
+        const datasource = await createDataSource();
+        //await runMigrations();
+    });
+
+    afterEach(async () => {
+        await dropDatabase();        
     });
 
     it("should be able to create a new category", async () => {
-        
         const response = await request(app)
             .post("/categories")
             .send({
@@ -24,4 +27,5 @@ describe("Create Category Controller", () => {
             });
         expect(response.status).toBe(201);
     });
+    
 });

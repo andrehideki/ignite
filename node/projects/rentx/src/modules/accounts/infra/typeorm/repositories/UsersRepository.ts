@@ -1,5 +1,4 @@
-import { Repository } from "typeorm";
-import { AppDataSource } from "../../../../../shared/infra/typeorm";
+import { DataSource, Repository } from "typeorm";
 import { ICreateUserDTO } from "../../../dtos/ICreateUserDTO";
 import { User } from "../../../../../shared/infra/typeorm/entities/User";
 import { IUsersRepository } from "../../../repositories/IUsersRepository";
@@ -8,8 +7,8 @@ class UsersRepository implements IUsersRepository {
 
     private repository: Repository<User>;
 
-    constructor() {
-        this.repository = AppDataSource.getRepository(User);
+    constructor(appDataSource: DataSource) {
+        this.repository = appDataSource.getRepository(User);
     }
     
 
