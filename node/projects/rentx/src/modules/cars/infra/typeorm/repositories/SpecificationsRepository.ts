@@ -1,4 +1,5 @@
 import { ICreateSpecificationDTO, ISpecificationsRespository } from "@modules/cars/repositories/ISpecificationRepository";
+import { appDataSource } from "@shared/infra/typeorm";
 import { singleton } from "tsyringe";
 import { DataSource, Repository } from "typeorm";
 import { Specification } from "../../../../../shared/infra/typeorm/entities/Specification";
@@ -8,7 +9,7 @@ class SpecificationsRepository implements ISpecificationsRespository {
 
     private repository: Repository<Specification>;
 
-    constructor(appDataSource: DataSource) {
+    constructor() {
         this.repository = appDataSource.getRepository(Specification);
     }
    

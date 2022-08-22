@@ -15,10 +15,11 @@ const datasourceProperties: DataSourceOptions = {
     entities: ["./src/shared/infra/typeorm/entities/*{.js,.ts}"]
 };
 
+
+export const appDataSource = new DataSource(datasourceProperties);
+
 export async function createDataSource(): Promise<DataSource> {
-    const appDataSource = new DataSource(datasourceProperties);
     try {
-        //await appDataSource.runMigrations();
         await appDataSource.initialize();
         console.log("Data Source has been initialized!");
         return appDataSource;
@@ -28,10 +29,9 @@ export async function createDataSource(): Promise<DataSource> {
 }
 
 export async function runMigrations() {
-    const datasource = await createDataSource();
     try {
         console.log("Running migrations")
-        await datasource.runMigrations();
+        await appDataSource.runMigrations();
         console.log("Migrations finished")
     } catch (e) {
         console.error(e)
@@ -39,10 +39,9 @@ export async function runMigrations() {
 }
 
 export async function dropDatabase() {
-    const datasource = await createDataSource();
     try {
         console.log("Deleting database")
-        await datasource.dropDatabase();
+        await appDataSource.dropDatabase();
         console.log("Database deleted")
     } catch (e) {
         console.error(e)
@@ -50,4 +49,3 @@ export async function dropDatabase() {
 }
 
 
-export const appDataSource = new DataSource(datasourceProperties);

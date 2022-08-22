@@ -1,3 +1,4 @@
+import { appDataSource } from "@shared/infra/typeorm";
 import { injectable, singleton } from "tsyringe";
 import { DataSource, Repository } from "typeorm";
 import { Category } from "../../../../../shared/infra/typeorm/entities/Category";
@@ -9,7 +10,7 @@ import { ICategoriesRespository, ICreateCategoryDTO } from "../../../repositorie
 class CategoriesRepository implements ICategoriesRespository {
     private repository: Repository<Category>;
 
-    constructor(appDataSource: DataSource) {
+    constructor() {
         this.repository = appDataSource.getRepository(Category);
     }
 
