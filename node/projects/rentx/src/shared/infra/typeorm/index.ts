@@ -41,7 +41,9 @@ export async function runMigrations() {
 export async function dropDatabase() {
     try {
         console.log("Deleting database")
-        await appDataSource.dropDatabase();
+        if (appDataSource.isInitialized)  {
+            await appDataSource.dropDatabase();
+        }
         console.log("Database deleted")
     } catch (e) {
         console.error(e)
