@@ -6,46 +6,47 @@ import "dotenv/config";
 import request from "supertest";
 import { DataSource } from "typeorm";
 
-// jest.useFakeTimers();
-jest.setTimeout(6000);
 let datasource: DataSource;
 
-// describe("Create Category Controller", () => {
+describe("Create Category Controller", () => {
 
-//     beforeEach(async () => {
-//         datasource = await createDataSource();
-//         await datasource.runMigrations();
-//     });
+    beforeAll(async () => {
+        datasource = await createDataSource();
+    });
 
-//     afterEach(async () => {
-//         await dropDatabase();        
-//     });
+    beforeEach(async () => {
+        await datasource.runMigrations();
+    });
 
-//     it("should be able to create a new category", async () => {
-//         const response = await request(app)
-//             .post("/categories")
-//             .send({
-//                 name: "category supertest",
-//                 description: "description"
-//             });
-//         expect(response.status).toBe(201);
-//     });
+    afterEach(async () => {
+        await dropDatabase();        
+    });
+
+    it("should be able to create a new category", async () => {
+        const response = await request(app)
+            .post("/categories")
+            .send({
+                name: "category supertest",
+                description: "description"
+            });
+        expect(response.status).toBe(201);
+    });
    
-//     it("should not be able to create a new category if name exists", async () => {
-//         await request(app)
-//             .post("/categories")
-//             .send({
-//                 name: "category supertest",
-//                 description: "description"
-//             });
-//         const response = await request(app)
-//         .post("/categories")
-//         .send({
-//             name: "category supertest",
-//             description: "description"
-//         });
-//         expect(response.status).toBe(400);
-//         expect(response.body.message).toBe("Category already exists");
-//     });
+    it("should not be able to create a new category if name exists", async () => {
+        await request(app)
+            .post("/categories")
+            .send({
+                name: "category supertest",
+                description: "description"
+            });
+        const response = await request(app)
+            .post("/categories")
+            .send({
+                name: "category supertest",
+                description: "description"
+            });
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Category already exists");
+    });
    
-// });
+});

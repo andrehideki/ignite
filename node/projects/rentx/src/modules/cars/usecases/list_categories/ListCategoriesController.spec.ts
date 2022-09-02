@@ -6,8 +6,6 @@ import "dotenv/config";
 import request from "supertest";
 import { DataSource } from "typeorm";
 
-// jest.useFakeTimers();
-jest.setTimeout(10000)
 let datasource: DataSource;
 
 describe("List categories Controller", () => {
@@ -21,7 +19,7 @@ describe("List categories Controller", () => {
         await dropDatabase();        
     });
 
-    it("should be able to list all categories", async () => {
+    test("should be able to list all categories", async () => {
         await request(app)
             .post("/categories")
             .send({
@@ -32,7 +30,7 @@ describe("List categories Controller", () => {
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0]).toHaveProperty("id");
-        expect(response.body[0].name).toHaveProperty("category supertest");
+        expect(response.body[0].name).toBe("category supertest");
     });
    
 });
